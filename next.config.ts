@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
-  basePath: process.env.NODE_ENV === "production" ? "/assignment_2" : "",
+  basePath: process.env.NODE_ENV === "production" ? "/-Scroll-Driven-Animation" : "",
 };
 
 export default nextConfig;
