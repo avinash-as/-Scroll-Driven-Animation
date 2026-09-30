@@ -99,15 +99,16 @@ export default function Hero() {
           overflow: "hidden",
         }}
       >
-        {/* Road */}
+        {/* Road - centered vertically */}
         <div
           style={{
             width: "100vw",
             height: "200px",
             backgroundColor: "#1e1e1e",
             position: "absolute",
-            bottom: 0,
+            top: "50%",
             left: 0,
+            transform: "translateY(-50%)",
             overflow: "hidden",
           }}
         >
