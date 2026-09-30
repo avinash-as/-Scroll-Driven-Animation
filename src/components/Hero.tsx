@@ -8,10 +8,10 @@ import Image from "next/image";
 gsap.registerPlugin(ScrollTrigger);
 
 const stats = [
-  { value: "58%", label: "Increase in pick up point use", color: "#def54f", textColor: "#111", position: { top: "5%", right: "30%" } },
-  { value: "23%", label: "Decreased in customer phone calls", color: "#6ac9ff", textColor: "#111", position: { bottom: "5%", right: "35%" } },
-  { value: "27%", label: "Increase in pick up point use", color: "#333", textColor: "#fff", position: { top: "5%", right: "10%" } },
-  { value: "40%", label: "Decreased in customer phone calls", color: "#fa7328", textColor: "#111", position: { bottom: "5%", right: "12.5%" } },
+  { id: "box1", value: "58%", label: "Increase in pick up point use", bg: "#def54f", color: "#111", style: { top: "5%", right: "30%" } },
+  { id: "box2", value: "23%", label: "Decreased in customer phone calls", bg: "#6ac9ff", color: "#111", style: { bottom: "5%", right: "35%" } },
+  { id: "box3", value: "27%", label: "Increase in pick up point use", bg: "#333", color: "#fff", style: { top: "5%", right: "10%" } },
+  { id: "box4", value: "40%", label: "Decreased in customer phone calls", bg: "#fa7328", color: "#111", style: { bottom: "5%", right: "12.5%" } },
 ];
 
 export default function Hero() {
@@ -47,9 +47,7 @@ export default function Hero() {
         onUpdate: function () {
           const carX = (gsap.getProperty(car, "x") as number) + carWidth / 2;
           const valueRect = valueText.getBoundingClientRect();
-          const letterOffsets = letters.map(
-            (letter) => letter.offsetLeft
-          );
+          const letterOffsets = letters.map((letter) => letter.offsetLeft);
 
           letters.forEach((letter, i) => {
             const letterX = valueRect.left + letterOffsets[i];
@@ -86,36 +84,64 @@ export default function Hero() {
   }, []);
 
   return (
-    <div ref={sectionRef} className="relative" style={{ height: "200vh" }}>
+    <div ref={sectionRef} style={{ height: "200vh", position: "relative", background: "#121212" }}>
       <div
         ref={trackRef}
-        className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden"
-        style={{ backgroundColor: "#d1d1d1" }}
+        style={{
+          position: "sticky",
+          top: 0,
+          height: "100vh",
+          width: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "#d1d1d1",
+          overflow: "hidden",
+        }}
       >
         {/* Road */}
         <div
-          className="absolute bottom-0 left-0 w-full"
-          style={{ height: "200px", backgroundColor: "#1e1e1e" }}
+          style={{
+            width: "100vw",
+            height: "200px",
+            backgroundColor: "#1e1e1e",
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            overflow: "hidden",
+          }}
         >
           {/* Trail */}
           <div
             ref={trailRef}
-            className="absolute top-0 left-0"
-            style={{ height: "200px", background: "#45db7d", width: 0 }}
+            style={{
+              height: "200px",
+              background: "#45db7d",
+              position: "absolute",
+              top: 0,
+              left: 0,
+              zIndex: 1,
+              width: 0,
+            }}
           />
 
           {/* Car */}
           <div
             ref={carRef}
-            className="absolute top-0 left-0"
-            style={{ height: "200px", zIndex: 10 }}
+            style={{
+              height: "200px",
+              position: "absolute",
+              top: 0,
+              left: 0,
+              zIndex: 10,
+            }}
           >
             <Image
               src="/McLaren_720S_2022_top_view.png"
               alt="McLaren 720S"
               width={300}
               height={200}
-              className="h-full w-auto object-contain"
+              style={{ height: "200px", width: "auto", objectFit: "contain" }}
               priority
             />
           </div>
@@ -124,11 +150,13 @@ export default function Hero() {
         {/* Value Text - WELCOME ITZFIZZ */}
         <div
           ref={valueTextRef}
-          className="absolute flex gap-[0.3rem]"
           style={{
+            position: "absolute",
             top: "30%",
             left: "5%",
             zIndex: 5,
+            display: "flex",
+            gap: "0.3rem",
             fontSize: "8rem",
             fontWeight: "bold",
           }}
@@ -151,18 +179,25 @@ export default function Hero() {
         </div>
 
         {/* Stats Boxes */}
-        {stats.map((stat, i) => (
+        {stats.map((stat) => (
           <div
-            key={i}
-            id={`box${i + 1}`}
-            className="absolute flex flex-col justify-start items-center gap-1 rounded-[10px] p-[30px]"
+            key={stat.id}
+            id={stat.id}
             style={{
-              ...stat.position,
-              backgroundColor: stat.color,
-              color: stat.textColor,
+              position: "absolute",
+              ...stat.style,
+              zIndex: 5,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "start",
+              flexDirection: "column",
+              gap: "5px",
+              padding: "30px",
+              borderRadius: "10px",
+              backgroundColor: stat.bg,
+              color: stat.color,
               fontSize: "18px",
               opacity: 0,
-              zIndex: 5,
             }}
           >
             <span style={{ fontSize: "58px", fontWeight: 600 }}>
