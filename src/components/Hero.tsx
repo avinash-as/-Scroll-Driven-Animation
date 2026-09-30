@@ -8,10 +8,10 @@ import Image from "next/image";
 gsap.registerPlugin(ScrollTrigger);
 
 const stats = [
-  { id: "box1", value: "58%", label: "Increase in pick up point use", bg: "#def54f", color: "#111", style: { top: "5%", right: "25%" } },
-  { id: "box2", value: "23%", label: "Decreased in customer phone calls", bg: "#6ac9ff", color: "#111", style: { top: "5%", right: "5%" } },
-  { id: "box3", value: "27%", label: "Increase in pick up point use", bg: "#333", color: "#fff", style: { bottom: "5%", right: "25%" } },
-  { id: "box4", value: "40%", label: "Decreased in customer phone calls", bg: "#fa7328", color: "#111", style: { bottom: "5%", right: "5%" } },
+  { id: "box1", value: "58%", label: "Increase in pick up point use", bg: "#def54f", color: "#111", style: { top: "5%", right: "30%" } },
+  { id: "box2", value: "23%", label: "Decreased in customer phone calls", bg: "#6ac9ff", color: "#111", style: { bottom: "5%", right: "35%" } },
+  { id: "box3", value: "27%", label: "Increase in pick up point use", bg: "#333", color: "#fff", style: { top: "5%", right: "10%" } },
+  { id: "box4", value: "40%", label: "Decreased in customer phone calls", bg: "#fa7328", color: "#111", style: { bottom: "5%", right: "12.5%" } },
 ];
 
 export default function Hero() {
@@ -19,18 +19,18 @@ export default function Hero() {
   const trackRef = useRef<HTMLDivElement>(null);
   const carRef = useRef<HTMLDivElement>(null);
   const trailRef = useRef<HTMLDivElement>(null);
-  const textRef = useRef<HTMLDivElement>(null);
   const lettersRef = useRef<(HTMLSpanElement | null)[]>([]);
+  const valueTextRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
       const car = carRef.current!;
       const trail = trailRef.current!;
-      const text = textRef.current!;
       const letters = lettersRef.current.filter(Boolean) as HTMLSpanElement[];
+      const valueText = valueTextRef.current!;
 
       const roadWidth = window.innerWidth;
-      const carWidth = 200;
+      const carWidth = 150;
       const endX = roadWidth - carWidth;
 
       // Car scroll animation
@@ -44,52 +44,21 @@ export default function Hero() {
         },
         x: endX,
         ease: "none",
-      });
-
-      // Trail follows car
-      gsap.to(trail, {
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: true,
-        },
-        width: roadWidth,
-        ease: "none",
-      });
-
-      // Text follows car across the road
-      gsap.to(text, {
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: true,
-        },
-        x: endX,
-        ease: "none",
-      });
-
-      // Letters light up based on car position
-      ScrollTrigger.create({
-        trigger: sectionRef.current,
-        start: "top top",
-        end: "bottom top",
-        scrub: true,
-        onUpdate: (self) => {
-          const progress = self.progress;
-          const carX = progress * endX + carWidth / 2;
-          const textRect = text.getBoundingClientRect();
+        onUpdate: function () {
+          const carX = (gsap.getProperty(car, "x") as number) + carWidth / 2;
+          const valueRect = valueText.getBoundingClientRect();
           const letterOffsets = letters.map((letter) => letter.offsetLeft);
 
           letters.forEach((letter, i) => {
-            const letterX = textRect.left + letterOffsets[i];
+            const letterX = valueRect.left + letterOffsets[i];
             if (carX >= letterX) {
               letter.style.opacity = "1";
             } else {
               letter.style.opacity = "0";
             }
           });
+
+          gsap.set(trail, { width: carX });
         },
       });
 
@@ -130,16 +99,15 @@ export default function Hero() {
           overflow: "hidden",
         }}
       >
-        {/* Road container - centered vertically */}
+        {/* Road */}
         <div
           style={{
             width: "100vw",
             height: "200px",
             backgroundColor: "#1e1e1e",
             position: "absolute",
-            top: "50%",
+            bottom: 0,
             left: 0,
-            transform: "translateY(-50%)",
             overflow: "hidden",
           }}
         >
@@ -171,7 +139,7 @@ export default function Hero() {
             <Image
               src="/McLaren_720S_2022_top_view.png"
               alt="McLaren 720S"
-              width={400}
+              width={300}
               height={200}
               style={{ height: "200px", width: "auto", objectFit: "contain" }}
               priority
@@ -179,20 +147,18 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Value Text - WELCOME ITZFIZZ on the road */}
+        {/* Value Text - WELCOME ITZFIZZ */}
         <div
-          ref={textRef}
+          ref={valueTextRef}
           style={{
             position: "absolute",
-            top: "50%",
-            left: 0,
-            transform: "translateY(-50%)",
+            top: "30%",
+            left: "5%",
             zIndex: 5,
             display: "flex",
             gap: "0.3rem",
-            fontSize: "clamp(2rem, 6vw, 6rem)",
+            fontSize: "8rem",
             fontWeight: "bold",
-            whiteSpace: "nowrap",
           }}
         >
           {"WELCOME ITZFIZZ".split("").map((letter, i) => (
