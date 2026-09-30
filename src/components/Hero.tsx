@@ -58,7 +58,7 @@ export default function Hero() {
         ease: "none",
       });
 
-      // Text follows car across the road on green trail
+      // Text follows car across the road
       gsap.to(text, {
         scrollTrigger: {
           trigger: sectionRef.current,
@@ -177,39 +177,39 @@ export default function Hero() {
               priority
             />
           </div>
+        </div>
 
-          {/* Value Text - WELCOME ITZFIZZ on the green trail */}
-          <div
-            ref={textRef}
-            style={{
-              position: "absolute",
-              top: "50%",
-              left: 0,
-              transform: "translateY(-50%)",
-              zIndex: 5,
-              display: "flex",
-              gap: "0.3rem",
-              fontSize: "clamp(2rem, 6vw, 6rem)",
-              fontWeight: "bold",
-              whiteSpace: "nowrap",
-            }}
-          >
-            {"WELCOME ITZFIZZ".split("").map((letter, i) => (
-              <span
-                key={i}
-                ref={(el) => {
-                  lettersRef.current[i] = el;
-                }}
-                style={{
-                  color: "#111",
-                  opacity: 0,
-                  display: "inline-block",
-                }}
-              >
-                {letter === " " ? "\u00A0" : letter}
-              </span>
-            ))}
-          </div>
+        {/* Value Text - WELCOME ITZFIZZ on the road */}
+        <div
+          ref={textRef}
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: 0,
+            transform: "translateY(-50%)",
+            zIndex: 5,
+            display: "flex",
+            gap: "0.3rem",
+            fontSize: "clamp(2rem, 6vw, 6rem)",
+            fontWeight: "bold",
+            whiteSpace: "nowrap",
+          }}
+        >
+          {"WELCOME ITZFIZZ".split("").map((letter, i) => (
+            <span
+              key={i}
+              ref={(el) => {
+                lettersRef.current[i] = el;
+              }}
+              style={{
+                color: "#111",
+                opacity: 0,
+                display: "inline-block",
+              }}
+            >
+              {letter === " " ? "\u00A0" : letter}
+            </span>
+          ))}
         </div>
 
         {/* Stats Boxes */}
