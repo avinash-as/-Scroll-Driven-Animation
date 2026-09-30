@@ -8,10 +8,10 @@ import Image from "next/image";
 gsap.registerPlugin(ScrollTrigger);
 
 const stats = [
-  { id: "box1", value: "58%", label: "Increase in pick up point use", bg: "#def54f", color: "#111", style: { top: "8%", right: "25%" } },
-  { id: "box2", value: "23%", label: "Decreased in customer phone calls", bg: "#6ac9ff", color: "#111", style: { bottom: "8%", right: "30%" } },
-  { id: "box3", value: "27%", label: "Increase in pick up point use", bg: "#333", color: "#fff", style: { top: "8%", right: "5%" } },
-  { id: "box4", value: "40%", label: "Decreased in customer phone calls", bg: "#fa7328", color: "#111", style: { bottom: "8%", right: "8%" } },
+  { id: "box1", value: "58%", label: "Increase in pick up point use", bg: "#def54f", color: "#111", style: { top: "5%", right: "30%" } },
+  { id: "box2", value: "23%", label: "Decreased in customer phone calls", bg: "#6ac9ff", color: "#111", style: { bottom: "5%", right: "35%" } },
+  { id: "box3", value: "27%", label: "Increase in pick up point use", bg: "#333", color: "#fff", style: { top: "5%", right: "10%" } },
+  { id: "box4", value: "40%", label: "Decreased in customer phone calls", bg: "#fa7328", color: "#111", style: { bottom: "5%", right: "12.5%" } },
 ];
 
 export default function Hero() {
@@ -30,7 +30,7 @@ export default function Hero() {
       const valueText = valueTextRef.current!;
 
       const roadWidth = window.innerWidth;
-      const carWidth = 200;
+      const carWidth = 150;
       const endX = roadWidth - carWidth;
 
       // Car scroll animation
@@ -139,7 +139,7 @@ export default function Hero() {
             <Image
               src="/McLaren_720S_2022_top_view.png"
               alt="McLaren 720S"
-              width={400}
+              width={300}
               height={200}
               style={{ height: "200px", width: "auto", objectFit: "contain" }}
               priority
@@ -152,15 +152,13 @@ export default function Hero() {
           ref={valueTextRef}
           style={{
             position: "absolute",
-            top: "25%",
-            left: "50%",
-            transform: "translateX(-50%)",
+            top: "30%",
+            left: "5%",
             zIndex: 5,
             display: "flex",
             gap: "0.3rem",
-            fontSize: "clamp(3rem, 8vw, 8rem)",
+            fontSize: "8rem",
             fontWeight: "bold",
-            whiteSpace: "nowrap",
           }}
         >
           {"WELCOME ITZFIZZ".split("").map((letter, i) => (
