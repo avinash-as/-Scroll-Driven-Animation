@@ -46,18 +46,6 @@ export default function Hero() {
         ease: "none",
       });
 
-      // Text moves with car on the road
-      gsap.to(text, {
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: true,
-        },
-        x: endX,
-        ease: "none",
-      });
-
       // Trail follows car
       gsap.to(trail, {
         scrollTrigger: {
@@ -67,6 +55,18 @@ export default function Hero() {
           scrub: true,
         },
         width: roadWidth,
+        ease: "none",
+      });
+
+      // Text follows car across the road on green trail
+      gsap.to(text, {
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top top",
+          end: "bottom top",
+          scrub: true,
+        },
+        x: endX,
         ease: "none",
       });
 
@@ -177,39 +177,39 @@ export default function Hero() {
               priority
             />
           </div>
-        </div>
 
-        {/* Value Text - WELCOME ITZFIZZ on the road container */}
-        <div
-          ref={textRef}
-          style={{
-            position: "absolute",
-            top: "50%",
-            left: 0,
-            transform: "translateY(-50%)",
-            zIndex: 5,
-            display: "flex",
-            gap: "0.3rem",
-            fontSize: "clamp(2rem, 6vw, 6rem)",
-            fontWeight: "bold",
-            whiteSpace: "nowrap",
-          }}
-        >
-          {"WELCOME ITZFIZZ".split("").map((letter, i) => (
-            <span
-              key={i}
-              ref={(el) => {
-                lettersRef.current[i] = el;
-              }}
-              style={{
-                color: "#111",
-                opacity: 0,
-                display: "inline-block",
-              }}
-            >
-              {letter === " " ? "\u00A0" : letter}
-            </span>
-          ))}
+          {/* Value Text - WELCOME ITZFIZZ on the green trail */}
+          <div
+            ref={textRef}
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: 0,
+              transform: "translateY(-50%)",
+              zIndex: 5,
+              display: "flex",
+              gap: "0.3rem",
+              fontSize: "clamp(2rem, 6vw, 6rem)",
+              fontWeight: "bold",
+              whiteSpace: "nowrap",
+            }}
+          >
+            {"WELCOME ITZFIZZ".split("").map((letter, i) => (
+              <span
+                key={i}
+                ref={(el) => {
+                  lettersRef.current[i] = el;
+                }}
+                style={{
+                  color: "#111",
+                  opacity: 0,
+                  display: "inline-block",
+                }}
+              >
+                {letter === " " ? "\u00A0" : letter}
+              </span>
+            ))}
+          </div>
         </div>
 
         {/* Stats Boxes */}
