@@ -19,15 +19,15 @@ export default function Hero() {
   const trackRef = useRef<HTMLDivElement>(null);
   const carRef = useRef<HTMLDivElement>(null);
   const trailRef = useRef<HTMLDivElement>(null);
+  const textRef = useRef<HTMLDivElement>(null);
   const lettersRef = useRef<(HTMLSpanElement | null)[]>([]);
-  const valueTextRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
       const car = carRef.current!;
       const trail = trailRef.current!;
+      const text = textRef.current!;
       const letters = lettersRef.current.filter(Boolean) as HTMLSpanElement[];
-      const valueText = valueTextRef.current!;
 
       const roadWidth = window.innerWidth;
       const carWidth = 200;
@@ -44,21 +44,52 @@ export default function Hero() {
         },
         x: endX,
         ease: "none",
-        onUpdate: function () {
-          const carX = (gsap.getProperty(car, "x") as number) + carWidth / 2;
-          const valueRect = valueText.getBoundingClientRect();
+      });
+
+      // Text follows car on the trail
+      gsap.to(text, {
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top top",
+          end: "bottom top",
+          scrub: true,
+        },
+        x: endX,
+        ease: "none",
+      });
+
+      // Trail follows car
+      gsap.to(trail, {
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top top",
+          end: "bottom top",
+          scrub: true,
+        },
+        width: roadWidth,
+        ease: "none",
+      });
+
+      // Letters light up based on car position
+      ScrollTrigger.create({
+        trigger: sectionRef.current,
+        start: "top top",
+        end: "bottom top",
+        scrub: true,
+        onUpdate: (self) => {
+          const progress = self.progress;
+          const carX = progress * endX + carWidth / 2;
+          const textRect = text.getBoundingClientRect();
           const letterOffsets = letters.map((letter) => letter.offsetLeft);
 
           letters.forEach((letter, i) => {
-            const letterX = valueRect.left + letterOffsets[i];
+            const letterX = textRect.left + letterOffsets[i];
             if (carX >= letterX) {
               letter.style.opacity = "1";
             } else {
               letter.style.opacity = "0";
             }
           });
-
-          gsap.set(trail, { width: carX });
         },
       });
 
@@ -146,40 +177,39 @@ export default function Hero() {
               priority
             />
           </div>
-        </div>
 
-        {/* Value Text - WELCOME ITZFIZZ on the trail */}
-        <div
-          ref={valueTextRef}
-          style={{
-            position: "absolute",
-            top: "50%",
-            left: 0,
-            transform: "translateY(-50%)",
-            zIndex: 5,
-            display: "flex",
-            gap: "0.3rem",
-            fontSize: "clamp(2rem, 6vw, 6rem)",
-            fontWeight: "bold",
-            whiteSpace: "nowrap",
-            marginTop: "-120px",
-          }}
-        >
-          {"WELCOME ITZFIZZ".split("").map((letter, i) => (
-            <span
-              key={i}
-              ref={(el) => {
-                lettersRef.current[i] = el;
-              }}
-              style={{
-                color: "#111",
-                opacity: 0,
-                display: "inline-block",
-              }}
-            >
-              {letter === " " ? "\u00A0" : letter}
-            </span>
-          ))}
+          {/* Value Text - WELCOME ITZFIZZ on the trail */}
+          <div
+            ref={textRef}
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: 0,
+              transform: "translateY(-50%)",
+              zIndex: 5,
+              display: "flex",
+              gap: "0.3rem",
+              fontSize: "clamp(2rem, 6vw, 6rem)",
+              fontWeight: "bold",
+              whiteSpace: "nowrap",
+            }}
+          >
+            {"WELCOME ITZFIZZ".split("").map((letter, i) => (
+              <span
+                key={i}
+                ref={(el) => {
+                  lettersRef.current[i] = el;
+                }}
+                style={{
+                  color: "#111",
+                  opacity: 0,
+                  display: "inline-block",
+                }}
+              >
+                {letter === " " ? "\u00A0" : letter}
+              </span>
+            ))}
+          </div>
         </div>
 
         {/* Stats Boxes */}
