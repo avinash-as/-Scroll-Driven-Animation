@@ -8,10 +8,10 @@ import Image from "next/image";
 gsap.registerPlugin(ScrollTrigger);
 
 const stats = [
-  { id: "box1", value: "58%", label: "Increase in pick up point use", bg: "#def54f", color: "#111", style: { top: "10%", right: "20%" } },
-  { id: "box2", value: "23%", label: "Decreased in customer phone calls", bg: "#6ac9ff", color: "#111", style: { bottom: "10%", right: "25%" } },
-  { id: "box3", value: "27%", label: "Increase in pick up point use", bg: "#333", color: "#fff", style: { top: "10%", right: "2%" } },
-  { id: "box4", value: "40%", label: "Decreased in customer phone calls", bg: "#fa7328", color: "#111", style: { bottom: "10%", right: "5%" } },
+  { id: "box1", value: "58%", label: "Increase in pick up point use", bg: "#def54f", color: "#111", style: { top: "5%", right: "25%" } },
+  { id: "box2", value: "23%", label: "Decreased in customer phone calls", bg: "#6ac9ff", color: "#111", style: { top: "5%", right: "5%" } },
+  { id: "box3", value: "27%", label: "Increase in pick up point use", bg: "#333", color: "#fff", style: { bottom: "5%", right: "25%" } },
+  { id: "box4", value: "40%", label: "Decreased in customer phone calls", bg: "#fa7328", color: "#111", style: { bottom: "5%", right: "5%" } },
 ];
 
 export default function Hero() {
@@ -99,15 +99,16 @@ export default function Hero() {
           overflow: "hidden",
         }}
       >
-        {/* Road */}
+        {/* Road - centered vertically */}
         <div
           style={{
             width: "100vw",
             height: "200px",
             backgroundColor: "#1e1e1e",
             position: "absolute",
-            bottom: 0,
+            top: "50%",
             left: 0,
+            transform: "translateY(-50%)",
             overflow: "hidden",
           }}
         >
@@ -152,14 +153,16 @@ export default function Hero() {
           ref={valueTextRef}
           style={{
             position: "absolute",
-            bottom: "100px",
+            top: "50%",
             left: 0,
+            transform: "translateY(-50%)",
             zIndex: 5,
             display: "flex",
             gap: "0.3rem",
             fontSize: "clamp(2rem, 6vw, 6rem)",
             fontWeight: "bold",
             whiteSpace: "nowrap",
+            marginTop: "-120px",
           }}
         >
           {"WELCOME ITZFIZZ".split("").map((letter, i) => (
