@@ -146,37 +146,38 @@ export default function Hero() {
               priority
             />
           </div>
-        </div>
 
-        {/* Value Text - WELCOME ITZFIZZ */}
-        <div
-          ref={valueTextRef}
-          style={{
-            position: "absolute",
-            top: "30%",
-            left: "5%",
-            zIndex: 5,
-            display: "flex",
-            gap: "0.3rem",
-            fontSize: "8rem",
-            fontWeight: "bold",
-          }}
-        >
-          {"WELCOME ITZFIZZ".split("").map((letter, i) => (
-            <span
-              key={i}
-              ref={(el) => {
-                lettersRef.current[i] = el;
-              }}
-              style={{
-                color: "#111",
-                opacity: 0,
-                display: "inline-block",
-              }}
-            >
-              {letter === " " ? "\u00A0" : letter}
-            </span>
-          ))}
+          {/* Value Text - WELCOME ITZFIZZ centered on the road */}
+          <div
+            ref={valueTextRef}
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: 0,
+              transform: "translateY(-50%)",
+              zIndex: 5,
+              display: "flex",
+              gap: "0.3rem",
+              fontSize: "8rem",
+              fontWeight: "bold",
+            }}
+          >
+            {"WELCOME ITZFIZZ".split("").map((letter, i) => (
+              <span
+                key={i}
+                ref={(el) => {
+                  lettersRef.current[i] = el;
+                }}
+                style={{
+                  color: "#111",
+                  opacity: 0,
+                  display: "inline-block",
+                }}
+              >
+                {letter === " " ? "\u00A0" : letter}
+              </span>
+            ))}
+          </div>
         </div>
 
         {/* Stats Boxes */}
